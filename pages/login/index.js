@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import StyledButton from "../../components/StyledButton";
 import Logo from "../../components/Logo";
+import TextInput from "../../components/TextInput";
+import { ContainerForm, ContainerLogo } from "./styles";
 
 // export const getStaticProps = async () => {
 //   const res = await fetch("https://teste.ignisdigital.tec.br/login", {
@@ -35,34 +37,27 @@ export default function Login() {
     }).then((res) =>
       res.json().then((data) => console.log("oia eu aqui didi:", data))
     );
-    router.push("/splath");
+    router.push("/home");
   };
 
   return (
-    <div>
-       <Logo />
-      <h1>Bem vindo</h1>
-      <form>
-        <div className="form-grupo">
-          <label>E-mail / username </label>
-          <input
-            type="text"
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="e-mail"
-          />
-        </div>
-        <div className="form-grupo">
-          <label>Senha</label>
-          <input
-            type="password"
-            onChange={(e) => setSenha(e.target.value)}
-            placeholder="password"
-          />
-          <h2>{email}</h2>
-          <h2>{senha}</h2>
-          <StyledButton handleclick={handleLogin}>Entrar</StyledButton>
-        </div>
-      </form>
-    </div>
+    <ContainerForm>
+      <ContainerLogo>
+      <Logo width={185} height={50} />
+      </ContainerLogo>
+      <TextInput
+        name="E-mail / username"
+        type="text"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <TextInput
+        name="Senha"
+        type="password"
+        onChange={(e) => setSenha(e.target.value)}
+      />
+      <h2>{email}</h2>
+      <h2>{senha}</h2>
+      <StyledButton handleclick={handleLogin}>Entrar</StyledButton>
+    </ContainerForm>
   );
 }

@@ -11,7 +11,7 @@ export default function SplathScreen() {
   };
   return (
     <>
-      <Logo />
+      <Logo width={205} height={50} />
       <Titulo>Do sofá pro seu celular</Titulo>
       <TextoComum>A revolução do cinema na sua casa.</TextoComum>
       <SplatImg
