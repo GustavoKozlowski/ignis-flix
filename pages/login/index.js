@@ -1,5 +1,8 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import StyledButton from "../../components/StyledButton";
+import Logo from "../../components/Logo";
 
 // export const getStaticProps = async () => {
 //   const res = await fetch("https://teste.ignisdigital.tec.br/login", {
@@ -15,10 +18,12 @@ import { useState } from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const router = useRouter();
+  const url = "https://teste.ignisdigital.tec.br/login";
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    fetch("https://teste.ignisdigital.tec.br/login", {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,13 +32,15 @@ export default function Login() {
         email: email,
         password: senha,
       }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    }).then((res) =>
+      res.json().then((data) => console.log("oia eu aqui didi:", data))
+    );
+    router.push("/splath");
   };
 
   return (
     <div>
+       <Logo />
       <h1>Bem vindo</h1>
       <form>
         <div className="form-grupo">
@@ -53,7 +60,7 @@ export default function Login() {
           />
           <h2>{email}</h2>
           <h2>{senha}</h2>
-          <button onClick={handleLogin}>Login</button>
+          <StyledButton handleclick={handleLogin}>Entrar</StyledButton>
         </div>
       </form>
     </div>
