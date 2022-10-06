@@ -24,8 +24,9 @@ export default function Login() {
   const url = "https://teste.ignisdigital.tec.br/login";
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    const response = await fetch(url, {
+    try {
+      e.preventDefault();
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,16 +35,26 @@ export default function Login() {
         email: email,
         password: senha,
       }),
-    }).then((res) =>
-      res.json().then((data) => console.log("oia eu aqui didi:", data))
-    );
-    router.push("/home");
+    }).then((response) => {
+      console.log(response.status)
+      if(response.status === 200){
+        response.json().then((data) => console.log("oia eu aqui didi:", data))
+        return  router.push("/home");
+      } 
+        const error = response.json()
+        console.log(error)
+    });
+    } catch (error) {
+      return console.log(error);
+      
+    }
+      
   };
 
   return (
     <ContainerForm>
       <ContainerLogo>
-      <Logo width={185} height={50} />
+        <Logo width={185} height={50} />
       </ContainerLogo>
       <TextInput
         name="E-mail / username"
@@ -55,8 +66,7 @@ export default function Login() {
         type="password"
         onChange={(e) => setSenha(e.target.value)}
       />
-      <h2>{email}</h2>
-      <h2>{senha}</h2>
+ 
       <StyledButton handleclick={handleLogin}>Entrar</StyledButton>
     </ContainerForm>
   );
